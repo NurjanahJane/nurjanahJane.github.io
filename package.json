@@ -9,9 +9,10 @@
     "server": "hexo server",
     "generate": "hexo generate",
     "deploy": "hexo deploy",
-    "static": "cp -r static/ public/"
+    "static": "cp -r static public; cp -r node_modules/cesium/Build/Cesium public/static"
   },
   "dependencies": {
+    "cesium": "^1.62.0",
     "hexo": "^3.2.2",
     "hexo-cli": "^1.0.2",
     "hexo-deployer-git": "^0.3.0",
