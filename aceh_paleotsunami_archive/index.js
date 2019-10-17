@@ -244,6 +244,8 @@
     timeline: false
   });
 
+  viewer.clock.multiplier = 0;
+
   Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 
   Cesium.Camera.DEFAULT_VIEW_RECTANGLE = Cesium.Rectangle.fromDegrees(
@@ -255,7 +257,7 @@
 
   viewer.camera.flyHome(5);
 
-  Cesium.KmlDataSource.load("AcehPaleotsunami12June2015.kml", {
+  Cesium.KmlDataSource.load("data.kml", {
     camera: viewer.scene.camera,
     canvas: viewer.scene.canvas
   }).then(function(kml) { try {
@@ -273,10 +275,8 @@
     });
 
     viewer.dataSources.add(kml);
-    viewer.clock.multiplier = 0;
 
     showData(data, [0]);
   } catch (err) { console.error(err); } });
-
 
 }());

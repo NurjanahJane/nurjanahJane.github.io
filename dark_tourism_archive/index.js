@@ -61,7 +61,7 @@
     }
   });
 
-  Cesium.KmlDataSource.load("kml.aceh.archive.kml", {
+  Cesium.KmlDataSource.load("data.kml", {
     camera: viewer.scene.camera,
     canvas: viewer.scene.canvas
   }).then(function(kml) { try {
