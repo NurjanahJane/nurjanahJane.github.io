@@ -67,6 +67,5 @@ theme: landscape
 ## Docs: https://hexo.io/docs/deployment.html
 deploy:
   type: git
-  repo: git@github.com:NurjanahJane/aceh_archive_for_drr.git
-  branch: gh-pages
-
+  repo: git@github.com:NurjanahJane/nurjanahjane.github.io
+  branch: master
