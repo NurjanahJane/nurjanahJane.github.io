@@ -114,3 +114,7 @@ a.button-sub {
 .content.active {
   display: block;
 }
+
+iframe.cesium-infoBox-iframe {
+  height: 500px !important;
+}
