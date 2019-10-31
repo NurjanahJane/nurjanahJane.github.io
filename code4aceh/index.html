@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+	<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+	<meta name="description" content="「code4aceh」" />
+	<meta property="og:image" content="img/screen.png" />
+	<meta property="og:description" content="code4aceh" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no">
+
+	<title>Code4Aceh-DigitalEarthArchive</title>
+	<link rel="SHORTCUT ICON" href="img/favicon.ico" />
+	<link rel="stylesheet" type="text/css" media="all" href="../Cesium/Widgets/widgets.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="Build/css/style.css" />
+	<link rel="stylesheet" type="text/css" media="all" href="Build/css/menubutton.css" />
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+	<script src="Build/js/slidein.js"></script>
+	<script src="../Cesium/Cesium.js"></script>
+</head>
+
+<body>
+	<div id="blackOut"><img class="loading" src="Build/data/loading.gif"></div>
+	<div id="cesiumContainer"></div>
+	<div id="menubar">
+		<div id="c_place" class="menu_button"><img src="img/icon_place.png"></div>
+	</div>
+	<div id="setsumei">
+		<img src="img/acehicons.png">
+	</div>
+	<div id="slide_menu"></div>
+	<div id="logo"><a href="https://www.facebook.com/code4aceh" target="_blank"><img src="img/logo.png"></a></div>
+	<script>
+		var blackOutDiv = document.getElementById("blackOut");
+		function viewPoints(_label, _lat, _lng, _heading, _pitch, _range) {
+			this.label = _label;
+			this.lat = _lat;
+			this.lng = _lng;
+			this.heading = _heading;
+			this.pitch = _pitch;
+			this.range = _range;
+		}
+
+		var viewPointsArray = [];
+		viewPointsArray[0] = new viewPoints("Balohan", 4.633426, 95.578812, 0, -85, 50000);
+		viewPointsArray[1] = new viewPoints("BlangEdit", 4.633426, 95.578812, 0, -85, 50000);
+		viewPointsArray[2] = new viewPoints("KetapangEdit", 4.633426, 95.578812, 0, -85, 50000);
+		viewPointsArray[3] = new viewPoints("Views from above", 5.223058, 95.737349, 0, -85, 180000);
+		viewPointsArray[4] = new viewPoints("First View", 4.633426, 95.578812, 0, -20, 1000);
+
+		function kmlData(_label, _url) {
+			this.label = _label;
+			this.url = _url;
+		}
+
+		var kmlDataArray = [];
+		kmlDataArray[0] = new kmlData("Aceh", 'kml/code4aceh.kml');
+
+		var mobile = 0;
+		var viewPointChangeMenu = document.getElementById('slide_menu');
+		var dropDownList = "";
+
+		for (var i = 0; i < viewPointsArray.length; i++) {
+			dropDownList = dropDownList + '<li><a href="#" onclick = "changeViewPoint(' + i + ',' + '5.0);return false;">' + viewPointsArray[i].label + '</a></li>';
+		}
+
+		var viewPointChangeMenuHtml = '<ul class="viewpoint">' + dropDownList + '</ul>';
+		console.log(viewPointChangeMenuHtml);
+		viewPointChangeMenu.innerHTML = viewPointChangeMenuHtml;
+
+		var getDevice = (function () {
+			var ua = navigator.userAgent;
+			if (ua.indexOf('iPhone') > 0 || ua.indexOf('iPod') > 0 || ua.indexOf('Android') > 0 && ua.indexOf('Mobile') > 0) {
+				mobile = 1;
+			} else if (ua.indexOf('iPad') > 0 || ua.indexOf('Android') > 0) {
+				mobile = 2;
+			} else {
+				mobile = 0;
+			}
+		})();
+
+		var viewer = new Cesium.Viewer('cesiumContainer', {
+			baseLayerPicker: true,
+			navigationHelpButton: false,
+			timeline: false,
+			animation: false,
+			sceneModePicker: false,
+			scene3DOnly: true,
+			terrainProvider : Cesium.createWorldTerrain({
+				requestVertexNormals: false
+			})
+		});
+		viewer.camera.frustum.fov = 70 * (3.14 / 180);
+		viewer.camera.setView({
+			position: Cesium.Cartesian3.fromDegrees(132.45470999999998, 34.394915, 10000000),
+			roll: 0.0
+		});
+		viewer.scene.sun.show = false;
+		viewer.camera.frustum.fov = 70 * (3.14 / 180);
+		viewer.infoBox.viewModel.maxHeight = 600;
+
+		blackOut(0);
+		setTimeout('groundZero()', 500);
+
+		function groundZero() {
+			changeViewPoint(3, 3);
+			setTimeout('landing()', 3000);
+		}
+
+		function landing() {
+			changeViewPoint(4, 3);
+			setTimeout('blackOut(1)', 3000);
+			setTimeout('loadKml()', 3000);
+		}
+
+		function loadKml() {
+			var i = 0;
+			var load = setInterval(function () {
+				var promise = Cesium.KmlDataSource.load(kmlDataArray[i].url);
+				promise.then(function (dataSource) {
+					viewer.dataSources.add(dataSource);
+				}).otherwise(function (error) {
+					alert('KMLデータが読み込めません');
+				});
+				i++;
+				if (i == kmlDataArray.length) {
+					clearInterval(load);
+					setTimeout('blackOut(0)', 3000);
+				}
+			}, 200);
+		}
+
+		function changeViewPoint(num, delay) {
+			var newLat = viewPointsArray[num].lat;
+			var newLng = viewPointsArray[num].lng;
+			var newHeading = Cesium.Math.toRadians(viewPointsArray[num].heading);
+			var newPitch = Cesium.Math.toRadians(viewPointsArray[num].pitch);
+			var newRange = viewPointsArray[num].range;
+
+			var center = Cesium.Cartesian3.fromDegrees(newLng, newLat);
+			var boundingSphere = new Cesium.BoundingSphere(center, newRange);
+			var headingPitchRange = new Cesium.HeadingPitchRange(newHeading, newPitch, newRange);
+
+			viewer.camera.constrainedAxis = Cesium.Cartesian3.UNIT_Z;
+			viewer.camera.flyToBoundingSphere(boundingSphere, {
+				duration: delay,
+				offset: headingPitchRange,
+				easingFunction: Cesium.EasingFunction.CUBIC_IN_OUT
+			});
+		}
+
+		function blackOut(param) {
+			if (param == 0) {
+				$(function () {
+					$(blackOutDiv).fadeOut("slow");
+				});
+			} else {
+				$(function () {
+					$(blackOutDiv).fadeIn("slow");
+				});
+			}
+		}
+	</script>
+</body>
+
+</html>

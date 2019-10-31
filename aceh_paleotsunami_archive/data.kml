@@ -395,6 +395,7 @@ In Figure 1, it explains that "Rajab: If earthquake happens in dhuha time, it wi
 				<style>
 					table {
 						width: 100%;
+				    table-layout: fixed;
 					}
 					table, th, td {
 					  border-collapse: collapse;

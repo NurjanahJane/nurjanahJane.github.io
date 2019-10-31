@@ -272,7 +272,7 @@ body {
   font-weight: bold;
 }
 #header {
-  height: 300px;
+  height: 600px;
   position: relative;
   border-bottom: 1px solid #ddd;
 }
@@ -1250,4 +1250,27 @@ pre .javascript .function {
   .mobile-nav-link:hover {
     color: #fff;
   }
+}
+.archive-button {
+  text-align: center;
+}
+.archive-button a {
+  margin: 10px auto;
+  padding: 20px 40px;
+  display: inline-block;
+  text-align: center;
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+  text-decoration: none;
+  border-radius: 50px;
+  background: -webkit-linear-gradient(135deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+  background: -moz-linear-gradient(135deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+  background: -ms-linear-gradient(135deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+  background: linear-gradient(-45deg, #ffa63d, #ff3d77, #338aff, #3cf0c5);
+  -webkit-background-size: 600%;
+  -moz-background-size: 600%;
+  background-size: 600%;
+  -webkit-box-shadow: 5px 0 10px rgba(60,240,197,0.5);
+  box-shadow: 5px 0 10px rgba(60,240,197,0.5);
 }
