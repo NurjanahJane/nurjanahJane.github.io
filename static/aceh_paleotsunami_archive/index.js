@@ -29,7 +29,7 @@
             entities: ["Aceh Barat-Samatiga"],
             children: [
               {
-                name: "Tsunami 2004",
+                name: "Samatiga Region coastal changing",
                 title: "Monecke et al 2013",
                 entities: ["Tsunami 2004"]
               },
@@ -222,15 +222,14 @@
       newActive.push(0);
     }
 
+    const visibleEntities = [];
+
     newActive.forEach(function(a, i) {
       var dd = path(dat, "children", newActive.slice(0, i + 1));
       if (dd.wrapper) dd.wrapper.classList.add("active");
       if (dd.element) dd.element.classList.add("active");
-      if (dd.entitiesObjects) dd.entitiesObjects.forEach(function(e, j, arr) {
-        e.show = true;
-        if (arr.length === 1 && newActive[0] === 0) {
-          viewer.selectedEntity = e;
-        }
+      if (dd.entitiesObjects) dd.entitiesObjects.forEach(function(e) {
+        visibleEntities.push(e);
       });
       if (newActive.length - 1 === i) {
         if (dd.title) {
@@ -244,12 +243,21 @@
       }
     });
 
+    visibleEntities.forEach(function(e) {
+      e.show = true;
+    });
+    if (visibleEntities.length === 1 && newActive[0] === 0) {
+      viewer.selectedEntity = visibleEntities[0];
+    }
+    viewer.flyTo(visibleEntities.length === 1 ? visibleEntities[0] : visibleEntities, { duration: 1 });
+
     active = newActive;
   }
 
   renderButtons(data);
 
   viewer.clock.multiplier = 0;
+  viewer.flyTo(viewer.entities);
 
   Cesium.Camera.DEFAULT_VIEW_FACTOR = 0;
 
