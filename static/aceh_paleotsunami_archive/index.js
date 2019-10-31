@@ -136,6 +136,11 @@
 
   data.element = document.getElementById("buttons1");
 
+  var viewer = new Cesium.Viewer(document.getElementById("root"), {
+    animation: false,
+    timeline: false
+  });
+
   function path(array, key, indexes) {
     if (
       !Array.isArray(indexes) ||
@@ -186,6 +191,8 @@
   }
 
   function showData(dat, indexList) {
+    viewer.selectedEntity = null;
+
     active.forEach(function(a, i) {
       var dd = path(dat, "children", active.slice(0, i + 1));
       if (dd.wrapper) dd.wrapper.classList.remove("active");
@@ -219,8 +226,11 @@
       var dd = path(dat, "children", newActive.slice(0, i + 1));
       if (dd.wrapper) dd.wrapper.classList.add("active");
       if (dd.element) dd.element.classList.add("active");
-      if (dd.entitiesObjects) dd.entitiesObjects.forEach(function(e) {
+      if (dd.entitiesObjects) dd.entitiesObjects.forEach(function(e, j, arr) {
         e.show = true;
+        if (arr.length === 1 && newActive[0] === 0) {
+          viewer.selectedEntity = e;
+        }
       });
       if (newActive.length - 1 === i) {
         if (dd.title) {
@@ -238,11 +248,6 @@
   }
 
   renderButtons(data);
-
-  var viewer = new Cesium.Viewer(document.getElementById("root"), {
-    animation: false,
-    timeline: false
-  });
 
   viewer.clock.multiplier = 0;
 
