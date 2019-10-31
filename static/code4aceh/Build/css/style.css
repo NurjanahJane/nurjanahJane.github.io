@@ -43,7 +43,6 @@ a:hover{
 
 .cesium-infoBox {
 	width:320px;
-	max-height: 505px;
 	top: 100px;
 	overflow:hidden;
 	padding:0px;
