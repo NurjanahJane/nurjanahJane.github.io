@@ -1,6 +1,8 @@
 (function() {
   "use strict";
 
+  Cesium.Ion.defaultAccessToken = *eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZGM1Yjc2Ni00NDNiLTQyN2EtODk4OC0zMzQ2YTIyZjYxMDAiLCJpZCI6MzYzLCJpYXQiOjE2MDg5OTg1ODF9.d_1g5f9IP0TlRy0U44lielVnVkOQr_5NHjvl5wjU8uA*;
+
   var data = {
     children: [
       {
