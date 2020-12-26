@@ -1,7 +1,7 @@
 (function() {
   "use strict";
 
-  Cesium.Ion.defaultAccessToken = *eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZGM1Yjc2Ni00NDNiLTQyN2EtODk4OC0zMzQ2YTIyZjYxMDAiLCJpZCI6MzYzLCJpYXQiOjE2MDg5OTg1ODF9.d_1g5f9IP0TlRy0U44lielVnVkOQr_5NHjvl5wjU8uA*;
+  Cesium.Ion.defaultAccessToken = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJqdGkiOiI1ZGM1Yjc2Ni00NDNiLTQyN2EtODk4OC0zMzQ2YTIyZjYxMDAiLCJpZCI6MzYzLCJpYXQiOjE2MDg5OTg1ODF9.d_1g5f9IP0TlRy0U44lielVnVkOQr_5NHjvl5wjU8uA";
 
   var center = Cesium.Cartesian3.fromDegrees(95.32511778121217, 5.574986361341263, 0);
 
